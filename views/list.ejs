@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo list</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="box">
+    <h1>Todo List</h1>
+</div>
+
+<div class="box">
+
+    <% for (var i = 0; i < ejes.length; i++) { %>
+        <div class="item">
+            <input type="checkbox">
+
+            <p><%= ejes[i].text %> 
+                <span class="priority-badge <%= ejes[i].priority %>"><%= ejes[i].priority %></span>
+            </p>
+
+            <form class="editForm" action="/edit" method="POST">
+                <input type="hidden" name="id" value="<%= i %>">
+                <input type="text" name="newText" value="<%= ejes[i].text %>">
+                <button class="saveBtn">Save</button>
+            </form>
+
+            <form class="deleteForm" action="/delete" method="POST">
+                <input type="hidden" name="id" value="<%= i %>">
+                <button class="deleteBtn">X</button>
+            </form>
+        </div>
+    <% } %>
+
+    <form class="addForm" action="/" method="POST" onsubmit="return validate()">
+        <input type="text" name="ele1" placeholder="Enter the task">
+
+        <select name="priority" class="prioritySelect">
+            <option value="High">High</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Low">Low</option>
+        </select>
+
+        <button class="addBtn" type="submit">+</button>
+    </form>
+
+    <div class="filters">
+        <a href="/filter/High">High</a>
+        <a href="/filter/Medium">Medium</a>
+        <a href="/filter/Low">Low</a>
+        <a href="/">All</a>
+    </div>
+
+</div>
+
+<footer>
+    <p>Made by Gursimarpreet Singh • 2025</p>
+</footer>
+
+<script>
+function validate() {
+    let x = document.querySelector("input[name='ele1']").value;
+    if (x.trim() === "") {
+        alert("Task cannot be empty!");
+        return false;
+    }
+}
+</script>
+
+</body>
+</html>
